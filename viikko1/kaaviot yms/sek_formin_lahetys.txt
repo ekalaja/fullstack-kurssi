@@ -1,0 +1,16 @@
+kayttaja->selain:
+note right of kayttaja
+kirjoittaa tekstikenttään jotain ja painaa nappia tallenna
+end note
+selain->palvelin: POST https://fullstack-exampleapp.herokuapp.com/new_note
+note left of palvelin
+Pyynnön mukana tuli kayttajan kirjoittama viesti req.body.note, 
+joka talletetaan notes listaan
+end note
+palvelin->selain: palvelin antaa selaimelle redirect pyynnön samalle sivulle
+selain->palvelin: GET https://fullstack-exampleapp.herokuapp.com/notes
+note right of selain
+selain lataa kaiken uudestaan, mutta data.json on muuttunut
+POST kyselyn mukana menneen viestin verran
+end note
+

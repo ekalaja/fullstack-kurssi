@@ -1,0 +1,23 @@
+kayttaja->selain:
+note left of selain
+kayttaja kirjoittaa osoiteriville
+fullstack-exampleapp.herokuapp.com/spa
+end note
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/spa
+palvelin->selain: palvelin palauttaa spa html-sivun
+note right of selain
+Sivun headerissä on spa.js scripta ja main.css 
+tyylitiedosto, jotka haetaan
+end note
+note right of selain
+  suoritetaan haettu scripta heti latauksen jälkeen ja
+  XMLHttpRequest() olio saa kuuntelijan, joka odottaa
+  kyselyn valmistumista
+end note
+selain->palvelin: Scripta hakee json muotoista dataa palvelimelta
+
+note right of selain
+  Kysely valmistui ja scripta asettaa
+  haetun datan luettavaan muotoon
+end note
+selain->kayttaja: kayttaja on vaikuttunut

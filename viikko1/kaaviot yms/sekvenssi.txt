@@ -1,0 +1,20 @@
+kayttaja->selain:
+note left of selain
+kayttaja klikkaa linkkiä muistiinpanot, joka ohjaa
+fullstack-exampleapp.herokuapp.com/notes
+end note
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/notes
+palvelin->selain: palvelin palauttaa notes html-sivun
+selain->palvelin: Sivun headerissä on main.js scripta, joka haetaan
+note right of selain
+  suoritetaan haettu scripta heti latauksen jälkeen ja
+  XMLHttpRequest() olio saa kuuntelijan, joka odottaa
+  kyselyn valmistumista
+end note
+selain->palvelin: Scripta hakee json muotoista dataa palvelimelta
+
+note right of selain
+  Kysely valmistui ja scripta asettaa 
+  haetun datan luettavaan muotoon
+end note
+selain->kayttaja: kayttaja on vaikuttunut

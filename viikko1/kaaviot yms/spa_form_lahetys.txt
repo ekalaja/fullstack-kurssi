@@ -1,0 +1,19 @@
+kayttaja->selain:
+note right of kayttaja
+kirjoittaa tekstikenttään jotain ja painaa nappia tallenna
+end note
+selain->selain: formilla kuuntelija, triggerillä on submit
+
+note left of selain
+Tavallinen formin lähetys estetty.
+Selain luo uuden muistiinpanon timestampilla ja lisää sen
+selaimen notes muuttujaan. Tämän jälkeen selain lataa 
+uudestaan paikallisen notes muuttujan sisällöt näkymään
+end note
+selain->palvelin: Muokattu post pyyntö palvelimelle 
+note left of palvelin
+Headissä lisäksi ilmoitettu Content-type application/json,
+jotta palvelin osaa käsitellä tiedot
+end note
+palvelin->selain: response 201 created
+
