@@ -14,7 +14,6 @@ class App extends React.Component {
             searchField: '',
             notification: null
 
-
         }
         this.componentWillMount()
         this.showPersons = this.showPersons.bind(this)
@@ -26,7 +25,6 @@ class App extends React.Component {
         e.preventDefault()
         const personObject = {
             name: this.state.newName,
-            id: this.state.persons.length + 1,
             number: this.state.newNumber
         }
         const uniqueNames = new Set(this.state.persons.map(person => person.name));
@@ -35,7 +33,7 @@ class App extends React.Component {
             this.addPerson(personObject)
         } else {
             const original = this.state.persons.find(p => p.name === this.state.newName)
-            this.updatePerson(original.id, this.state.newNumber)
+            this.updatePerson(original, this.state.newNumber)
         }
 
     }
@@ -56,15 +54,16 @@ class App extends React.Component {
             })
     }
 
-    updatePerson = (id, number) => {
-            const person = this.state.persons.find(n => n.id === id)
-            const changedPerson = { ...person, number: number }
+    updatePerson = (person, newNumber) => {
+            const updatedPerson = { ...person, number: newNumber }
             personService
-                .update(id, changedPerson)
+                .update(person.id, updatedPerson)
                 .then(changedPerson => {
-                    const persons = this.state.persons.filter(n => n.id !== id)
+                    const persons = this.state.persons.filter(n => n.id !== person.id)
                     this.setState({
                         persons: persons.concat(changedPerson),
+                        newName: '',
+                        newNumber: '',
                         notification: `muutettiin henkilön ${changedPerson.name} numeroa`
                     })
                     setTimeout(() => {
@@ -72,7 +71,7 @@ class App extends React.Component {
                     }, 3000)
                 })
                 .catch(error => {
-                    this.addPerson(changedPerson)
+                    this.addPerson(updatedPerson)
                 })
     }
 
@@ -95,11 +94,6 @@ class App extends React.Component {
         )}
 
     }
-
-    deleteTest = (e) => {
-        window.confirm("juhuu")
-    }
-
 
     componentWillMount() {
         personService
@@ -131,7 +125,7 @@ class App extends React.Component {
         return(
             <div>
                 {personsLimited.sort(byId).map(person => <div key={person.id} >
-                    <li>{person.name}: {person.number} <button onClick={this.deletePerson(person.id)}>jep</button></li>
+                    <li>{person.name}: {person.number} <button onClick={this.deletePerson(person.id)}>poista</button></li>
                 </div>)}
 
             </div>
@@ -169,7 +163,7 @@ class App extends React.Component {
     }
 }
 
-const byId = (note1, note2) => note1.id - note2.id
+const byId = (person1, person2) => person1.id - person2.id
 
 const Notification = ({ message }) => {
     if (message === null) {
